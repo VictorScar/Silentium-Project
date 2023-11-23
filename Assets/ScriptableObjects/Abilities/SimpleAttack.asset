@@ -7,15 +7,18 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b9524f838da44f44820df8010574ecb, type: 3}
+  m_Script: {fileID: 11500000, guid: 650f8f54c56b9004ba14ff560be39cec, type: 3}
   m_Name: SimpleAttack
   m_EditorClassIdentifier: 
-  abilityName: Simple attack
+  abilityName: Simple Attack
   requiredNumberOfPoints: 1
-  force: 2
+  requiredAbilityPoints: 0
+  prizeAbilityPoints: 1
+  force: 0
   actionType: 1
+  abilityAnimation: 1
   icon: {fileID: 21300000, guid: 818808899910f674086ea2a547f6f50c, type: 3}
-  RecoveryTime: 0
   effect: {fileID: 0}
+  RecoveryTime: 0

@@ -6,95 +6,69 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] TMP_Text playerHealth;
+    [SerializeField] Color victoryColor;
+    [SerializeField] Color defeatColor;
+    [SerializeField] string victoryMessage;
+    [SerializeField] string defeatMessage;
+
+    [SerializeField] TMP_Text turnMessage;
     [SerializeField] TMP_Text gameMessage;
-    [SerializeField] TMP_Text enemy2Health;
-    [SerializeField] TMP_Text enemy3Health;
-    [SerializeField] Slider playerHealthBar;
-    [SerializeField] EnemyInfo[] enemyInfoBars;
-    [SerializeField] TMP_Text actionPointsCountText;
+    [SerializeField] GameObject mainPanel;
 
+    [SerializeField] FightUI fightUI;
+    [SerializeField] ActionPointCountUI actionPointCountUI;
+    [SerializeField] AbilityPointUI abilityPointUI;
+    [SerializeField] AbilityButtonsManager buttonsManager;
 
-    [SerializeField] AbilityButton[] buttons;
-    [SerializeField] TouchScreen touchScreen;
-    
+    TurnManager turnManager;
+    ActionManager actionManager;
     Player player;
-    List<Enemy> enemies;
+    List<GameCharacter> entrants;
 
     private void Start()
     {
         player = Game.Instance.Player;
-        IniteAbilitiesButton(player.Abilities);
-        enemies = Game.Instance.Enemies;
-        player.onHealthChanged += UpdateFightUI;
-        IniteFightUI();
-        
-        foreach (Enemy enemy in enemies)
-        {
-            enemy.onHealthChanged += UpdateFightUI;
-        }
-    }
-    
-    void IniteAbilitiesButton(List<Ability> abilitiesPlayer)
-    {
-        for (int i = 0; i < buttons.Length; i++)
-        {
-            AbilityButton button = buttons[i];
-            if (i < abilitiesPlayer.Count)
-            {
-                Ability ability = abilitiesPlayer[i];
-                button.Icon = ability.Icon;
-                button.Ability = ability;
-                button.onClickAbility += ability.Run;
-            }
-            else
-            {
-                button.gameObject.SetActive(false);
-            }
-        }
+        turnManager = Game.Instance.TurnManager;
+        actionManager = Game.Instance.ActionManager;
 
-        touchScreen.onBattleClick += touchScreen.BaseAbility.Run;
+        fightUI.Init(turnManager.Entrants);
+        actionPointCountUI.Init(actionManager);
+        abilityPointUI.Init(player);
+
+        turnManager.onBeginNewTurn += ShowGameMessage;
+        player.onFightOver += ProcessGameEvent;
     }
 
-    void IniteFightUI()
+    void ProcessGameEvent(bool isVictory)
     {
-        UpdateFightUI();
-        int i = 0;
-        foreach (EnemyInfo enemyBar in enemyInfoBars)
+        if (isVictory)
         {
-            if (i < enemies.Count)
-            {
-                enemyBar.InitObject(enemies[i]);
-                i++;
-            }
-            else
-            {
-                enemyBar.gameObject.SetActive(false);
-            }
+            ShowMainPanel(victoryMessage, victoryColor);
+        }
+        else
+        {
+            ShowMainPanel(defeatMessage, defeatColor);
         }
     }
 
-    void UpdateFightUI()
+    public void ShowGameMessage(GameCharacter character)
     {
-        playerHealth.text = $"{player.Health} / {player.MaxHealth}";
-        playerHealthBar.value = player.Health / player.MaxHealth;
+        string message = $"Õîä {character.CharacterName}";
+        StartCoroutine(GameMessageCoroutine(message));
     }
 
-    public void ShowGameMessage(string message)
+    void ShowMainPanel(string message, Color textColor)
     {
-        StartCoroutine(gameMessageCoroutine(message));
-    }
-
-    public void ShowActionPointCount(int pointsCount)
-    {
-        actionPointsCountText.text = pointsCount.ToString();
-    }
-
-    IEnumerator gameMessageCoroutine(string message)
-    {
-        gameMessage.gameObject.SetActive(true);
+        gameMessage.color = textColor;
         gameMessage.text = message;
+        mainPanel.SetActive(true);
+    }
+
+    IEnumerator GameMessageCoroutine(string message)
+    {
+        turnMessage.gameObject.SetActive(true);
+        turnMessage.text = message;
         yield return new WaitForSeconds(1);
-        gameMessage.gameObject.SetActive(false);
+        turnMessage.gameObject.SetActive(false);
     }
 }

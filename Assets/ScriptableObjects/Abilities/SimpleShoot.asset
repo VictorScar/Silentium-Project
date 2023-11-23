@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 650f8f54c56b9004ba14ff560be39cec, type: 3}
+  m_Name: SimpleShoot
+  m_EditorClassIdentifier: 
+  abilityName: Simple Shoot
+  requiredNumberOfPoints: 1
+  requiredAbilityPoints: 0
+  prizeAbilityPoints: 1
+  force: 0
+  actionType: 2
+  abilityAnimation: 3
+  icon: {fileID: 21300000, guid: 818808899910f674086ea2a547f6f50c, type: 3}
+  effect: {fileID: 5238082426769725570, guid: c584794beffc20d408d1d7b52cb4fa6e, type: 3}
+  recoveryTime: 0

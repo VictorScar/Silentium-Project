@@ -1,34 +1,53 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class EnemyInfo : MonoBehaviour
+public class EnemyInfo : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField] Slider healthSlider;
     Enemy enemy;
+    [SerializeField] Slider healthSlider;
     TMP_Text enemyNameUI;
 
-    public Slider HealthSlider { get => healthSlider; private set => healthSlider = value; }
+    public event Action<GameCharacter> onCharacterClick;
+    public event Action<EnemyInfo> onInfoBarDeactive;
 
-    // Start is called before the first frame update
-    void Start()
+    public Slider HealthSlider { get => healthSlider; private set => healthSlider = value; }
+    public Enemy Enemy { get => enemy; }
+
+    public void Init(Enemy enemy)
     {
-        
+        this.enemy = enemy;
+        enemy.onHealthChanged += UpdateHealthText;
+        enemy.onCharacterDie += DeactiveHealtBar;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateHealthText()
     {
-        if (enemy!=null)
+        if (enemy != null)
         {
             healthSlider.value = enemy.Health / enemy.MaxHealth;
         }
+
     }
 
-    public void InitObject(Enemy enemy)
+    public void DeactiveHealtBar(GameCharacter character)
     {
-        this.enemy = enemy;
+        if (enemy != null)
+        {
+            enemy.onHealthChanged -= UpdateHealthText;
+            enemy.onCharacterDie -= DeactiveHealtBar;
+            enemy = null;
+        }
+       
+        onInfoBarDeactive?.Invoke(this);
+        gameObject.SetActive(false);
+        
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        onCharacterClick?.Invoke(enemy);
     }
 }

@@ -7,38 +7,78 @@ using UnityEngine.UI;
 public class AbilityButton : MonoBehaviour
 {
     public Sprite Icon { get; set; }
-    public Ability Ability { get => ability; set => ability = value; }
+    public AbilityInfo AbilityInfo { get => abilityInfo; set => abilityInfo = value; }
 
     [SerializeField] Button button;
-    [SerializeField] Ability ability;
-    Player player;
+    [SerializeField] protected AbilityInfo abilityInfo;
+    protected Player player;
+    RectTransform buttonPosition;
     Image iconUI;
-    public event Action <GameCharacter> onClickAbility;
-    void Start()
+
+    Vector2 disableOffset = new Vector2(200f, 0);
+
+    bool enabledAbility = true;
+
+    public event Action<bool> onClickAbility;
+     
+
+    public void InitAbilityButton(Player player, AbilityInfo abilityInfo)
     {
-        //Icon = ability.Icon;
-        player = Game.Instance.Player;
+        this.player = player;
+        this.abilityInfo = abilityInfo;
         iconUI = GetComponentInChildren<Image>();
-        iconUI.sprite = ability.Icon;
-        if (button!= null)
+        iconUI.sprite = abilityInfo.Ability.Icon;
+        if (button != null)
         {
             button = GetComponent<Button>();
             button.onClick.AddListener(OnCkickAbility);
         }
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        buttonPosition = GetComponent<RectTransform>();
+
+        SetEnableButton(false);
     }
 
     public void OnCkickAbility()
     {
-        onClickAbility?.Invoke(player);
-        //Debug.Log("Click");
+        onClickAbility?.Invoke(false);
+        if (player.CanAction && abilityInfo.StateAbility)
+        {
+            Ability ability = abilityInfo.GetAbility();
+            player.ApplyAbility(ability);
+        }
+        else if (!abilityInfo.StateAbility)
+        {
+            Debug.Log("Ability is not active");
+        }
+
     }
 
-    
+    public virtual void SetEnableButton(bool enable)
+    {
+        button.enabled = enable;
+
+        if (!enable)
+        {
+            if (enabledAbility)
+            {
+                buttonPosition.offsetMax += disableOffset;
+                enabledAbility = false;
+            }
+            else
+            {
+                return;
+            }
+
+        }
+        else
+        {
+            if (!enabledAbility)
+            {
+                buttonPosition.offsetMax -= disableOffset;
+                enabledAbility = true;
+            }
+
+        }
+    }
 }

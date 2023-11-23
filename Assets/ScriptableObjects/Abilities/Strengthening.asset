@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03f516e21872a7841bb65805034b74be, type: 3}
+  m_Name: Strengthening
+  m_EditorClassIdentifier: 
+  abilityName: Strengthening
+  requiredNumberOfPoints: 1
+  requiredAbilityPoints: 1
+  prizeAbilityPoints: 0
+  force: 5
+  actionType: 3
+  abilityAnimation: 4
+  icon: {fileID: 21300000, guid: 8fb30196480f1f6419e819def44d3428, type: 3}
+  effect: {fileID: 3874168336256062051, guid: ebb9c320621c7a54bb01f95e48e4dac3, type: 3}
+  audio: {fileID: 8300000, guid: acbcb75601b0082458fda8807f67c813, type: 3}
+  recoveryTime: 5
+  buffAttack: 3
+  buffDefence: 3
+  buffHealth: 0
+  buffMaxHealth: 0
+  buffSpeed: 0
+  duration: 3

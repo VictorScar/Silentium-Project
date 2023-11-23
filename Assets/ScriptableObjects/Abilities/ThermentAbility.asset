@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03f516e21872a7841bb65805034b74be, type: 3}
+  m_Name: ThermentAbility
+  m_EditorClassIdentifier: 
+  abilityName: ThermentAbility
+  requiredNumberOfPoints: 1
+  requiredAbilityPoints: 1
+  prizeAbilityPoints: 0
+  force: 15
+  actionType: 3
+  abilityAnimation: 4
+  icon: {fileID: 21300000, guid: c126f598656912a4c9cbd5cb88032412, type: 3}
+  effect: {fileID: 6507846545912710061, guid: 15459d852f029b3489dbfd26d53b0320, type: 3}
+  audio: {fileID: 8300000, guid: cfce0cea076109f478783201b2a9f57f, type: 3}
+  recoveryTime: 1
+  buffAttack: 0
+  buffDefence: 0
+  buffHealth: 15
+  buffMaxHealth: 0
+  buffSpeed: 0
+  duration: 1
